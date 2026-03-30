@@ -1,5 +1,5 @@
 # ironclaw-howto-setup
-This is a guide how to setup ironclaw on a minimal debian system. I am focusing on running as much as possible at home.
+This is a guide how to setup ironclaw on a minimal debian system. I am focusing on running as much as possible at home - so should you.
 
 Prerequisites are: a local ollama server that is either running in your network on a dedicated machine or on the same computer.
 
@@ -35,15 +35,46 @@ WantedBy=default.target
 
 
 
+If you are running Ollama and ironclaw on the same machine you don't need the nginx step. If you run Ollama on another Machine ironclaw will refuses to connect without TLS-Encryption. So we will trick it into accepting an insecure connection to Ollama - because we don't want to fiddle with Certificates and such for now! Don't do that at home kids!
+
+Installing nginx:
+
+add this:  
+nano /etc/nginx/sites-available/ollama
+server {
+    listen 11434;
+    server_name ollama.local;
+
+    location / {
+        proxy_pass http://X.X.X.X:11434;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+
+        # LLM generation can take minutes
+        proxy_read_timeout 600s;
+    }
+}
+
+ln -s /etc/nginx/sites-available/ollama /etc/nginx/sites-enabled/
+nginx -t
+systemctl daemon-reload
+systemctl restart nginx
+
+
 
 Installing Rust:
 
 apt-get install curl build-essential gcc make rustc -y
 
+
 Installing Postgres:
 
 apt-get install postgresql postgresql-contrib -y
 apt-get install postgresql-server-dev-17 postgresql-17-pgvector -y (the number might have changed as you read this - 17 is from 03/2026)
+
 
 Installing ironclaw:
 
@@ -51,6 +82,10 @@ curl --proto '=https' --tlsv1.2 -LsSf \
   https://github.com/nearai/ironclaw/releases/latest/download/ironclaw-installer.sh | sh
 
 source $HOME/.cargo/env
+
+
+
+Creating the Database:
 
 sudo -i -u postgres
 
