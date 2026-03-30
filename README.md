@@ -44,7 +44,8 @@ Installing nginx:
 
 add this:  
 nano /etc/nginx/sites-available/ollama
-<pre>```server {
+<pre>```
+server {
     listen 11434;
     server_name ollama.local;
 
@@ -59,7 +60,8 @@ nano /etc/nginx/sites-available/ollama
         # LLM generation can take minutes
         proxy_read_timeout 600s;
     }
-}```<pre>
+}
+```<pre>
 
 ln -s /etc/nginx/sites-available/ollama /etc/nginx/sites-enabled/
     
