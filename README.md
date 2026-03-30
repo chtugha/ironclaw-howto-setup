@@ -3,17 +3,20 @@ This is a guide how to setup ironclaw on a minimal debian system. I am focusing 
 
 Prerequisites are: a local ollama server that is either running in your network on a dedicated machine or on the same computer.
 
+
 Ollama setup on a debian console:
 
 curl -fsSL https://ollama.com/install.sh | sh
 
+
 ollama pull qwen3:14b
+
 ollama run qwen3:14b
 
 
 Your service file (usually at: /etc/systemd/system/ollama.service) should look like this if you want the model to be loaded on reboot:
 
-[Unit]
+<pre>```[Unit]
 Description=Ollama Service
 After=network-online.target
 
@@ -31,7 +34,7 @@ Environment="OLLAMA_DEBUG=1"
 ExecStartPost=/bin/bash -c "sleep 10 && /usr/local/bin/ollama run qwen3:14b"
 
 [Install]
-WantedBy=default.target
+WantedBy=default.target```</pre>
 
 
 
