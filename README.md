@@ -44,7 +44,7 @@ Installing nginx:
 
 add this:  
 nano /etc/nginx/sites-available/ollama
-server {
+<pre>```server {
     listen 11434;
     server_name ollama.local;
 
@@ -59,11 +59,14 @@ server {
         # LLM generation can take minutes
         proxy_read_timeout 600s;
     }
-}
+}```<pre>
 
 ln -s /etc/nginx/sites-available/ollama /etc/nginx/sites-enabled/
+    
 nginx -t
+    
 systemctl daemon-reload
+    
 systemctl restart nginx
 
 
@@ -76,6 +79,7 @@ apt-get install curl build-essential gcc make rustc -y
 Installing Postgres:
 
 apt-get install postgresql postgresql-contrib -y
+    
 apt-get install postgresql-server-dev-17 postgresql-17-pgvector -y (the number might have changed as you read this - 17 is from 03/2026)
 
 
@@ -93,23 +97,32 @@ Creating the Database:
 sudo -i -u postgres
 
 psql
+    
 CREATE ROLE CaptainAwesome LOGIN SUPERUSER;  (You can of course exchange CaptainAwesome for whatever you want)
+
 \q
 
 createdb ironclaw
+    
 psql ironclaw -c "CREATE EXTENSION IF NOT EXISTS vector;"
+
 exit
 
 sudo -u postgres psql
+    
 ALTER USER CaptainAwesome WITH PASSWORD '1337';
+
 \q
 
-Configure ironclaw with the onboard wizard
+
+    
+Configure ironclaw with the onboard wizard:
 
 Execute this command:
+    
 ironclaw onboard
 
-Make these selections:
+<pre>```Make these selections:
 1 for PostgreSQL
 Database URL: postgres://CaptainAwesome:1337@localhost:5432/ironclaw
 Run database migrations? Y
@@ -122,14 +135,18 @@ Configure a tunnel? N
 Which channels do you want to enable? Check HTTP webhook. Check others as you wish.
 Which tools do you want to install? Make sure Gmail is checked. Check others as you wish.
 Enable a sandbox? N
-Enable heartbeat? N
+Enable heartbeat? N```<pre>
+    
 
 Now Configure the Gateway and the Webhooks:
 
 export GATEWAY_HOST="0.0.0.0"
+    
 export IRONCLAW_HOST="0.0.0.0:3000"
+    
 export HTTP_WEBHOOK_SECRET="1337"
 
+    
 And run ironclaw:
 
 ironclaw
