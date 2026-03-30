@@ -61,7 +61,8 @@ server {
         proxy_read_timeout 600s;
     }
 }
-```<pre>
+    
+```</pre>
 
 ln -s /etc/nginx/sites-available/ollama /etc/nginx/sites-enabled/
     
@@ -137,7 +138,7 @@ Configure a tunnel? N
 Which channels do you want to enable? Check HTTP webhook. Check others as you wish.
 Which tools do you want to install? Make sure Gmail is checked. Check others as you wish.
 Enable a sandbox? N
-Enable heartbeat? N```<pre>
+Enable heartbeat? N```</pre>
     
 
 Now Configure the Gateway and the Webhooks:
