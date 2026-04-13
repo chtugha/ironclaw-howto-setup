@@ -103,20 +103,15 @@ psql
     
 CREATE ROLE CaptainAwesome LOGIN SUPERUSER;  (You can of course exchange CaptainAwesome for whatever you want)
 
-\q
-
 createdb ironclaw
     
-psql ironclaw -c "CREATE EXTENSION IF NOT EXISTS vector;"
-
-exit
-
-sudo -u postgres psql
+ironclaw -c "CREATE EXTENSION IF NOT EXISTS vector;"
     
 ALTER USER CaptainAwesome WITH PASSWORD '1337';
 
 \q
 
+exit
 
     
 Configure ironclaw with the onboard wizard:
