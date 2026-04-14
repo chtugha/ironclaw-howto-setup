@@ -97,21 +97,15 @@ source $HOME/.cargo/env
 
 Creating the Database:
 
-sudo -i -u postgres
+sudo -i -u postgres psql -c "CREATE ROLE CaptainAwesome LOGIN SUPERUSER;"     (You can of course exchange CaptainAwesome for whatever you want)
 
-psql
+sudo -i -u postgres createdb ironclaw
     
-CREATE ROLE CaptainAwesome LOGIN SUPERUSER;  (You can of course exchange CaptainAwesome for whatever you want)
-
-createdb ironclaw
+sudo -i -u postgres psql -d ironclaw -c "CREATE EXTENSION IF NOT EXISTS vector;"
     
-ironclaw -c "CREATE EXTENSION IF NOT EXISTS vector;"
-    
-ALTER USER CaptainAwesome WITH PASSWORD '1337';
+sudo -i -u postgres psql -c "ALTER USER CaptainAwesome WITH PASSWORD '1337';"
 
-\q
 
-exit
 
     
 Configure ironclaw with the onboard wizard:
