@@ -1,10 +1,9 @@
 # ironclaw-howto-setup
-This is a guide how to setup ironclaw on a minimal debian system. I am focusing on running as much as possible at home - so should you.
-
-Prerequisites are: a local ollama server that is either running in your network on a dedicated machine or on the same computer.
+This is a guide how to setup ironclaw on a minimal debian system and to connect it to a local ollama instance. 
 
 
-Ollama setup on a debian console:
+If not already running: This is how you set up Ollama on a debian console:
+
 
 curl -fsSL https://ollama.com/install.sh | sh
 
@@ -38,7 +37,9 @@ WantedBy=default.target```</pre>
 
 
 
-If you are running Ollama and ironclaw on the same machine you don't need the nginx step. If you run Ollama on another Machine ironclaw will refuses to connect without TLS-Encryption. So we will trick it into accepting an insecure connection to Ollama - because we don't want to fiddle with Certificates and such for now! Don't do that at home kids!
+If you are running Ollama and ironclaw on the same machine you don't need the nginx step. If you don't run Ollama on the same Machine ironclaw will refuse to connect to Ollama without TLS-Encryption.
+Because we don't want to fiddle with Certificates and such for now we will route the connection trough nginx and trick ironclaw into accepting an insecure connection to Ollama like that. Don't do that at home kids!
+
 
 Installing nginx:
 
