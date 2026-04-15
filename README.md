@@ -15,7 +15,7 @@ ollama run qwen3:14b
 
 Your service file (usually at: /etc/systemd/system/ollama.service) should look like this if you want the model to be loaded on reboot:
 
-<pre>```[Unit]
+<pre>[Unit]
 Description=Ollama Service
 After=network-online.target
 
@@ -33,7 +33,7 @@ Environment="OLLAMA_DEBUG=1"
 ExecStartPost=/bin/bash -c "sleep 10 && /usr/local/bin/ollama run qwen3:14b"
 
 [Install]
-WantedBy=default.target```</pre>
+WantedBy=default.target</pre>
 
 
 
