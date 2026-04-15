@@ -90,7 +90,7 @@ nano /etc/postgresql/17/main/postgresql.conf
 
 <pre>
 uncomment #listen_addresses = 'localhost'
-<pre>
+</pre>
 
     
 Installing ironclaw:
