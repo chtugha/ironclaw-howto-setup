@@ -86,7 +86,13 @@ apt-get install postgresql postgresql-contrib -y
     
 apt-get install postgresql-server-dev-17 postgresql-17-pgvector -y (the number might have changed as you read this - 17 is from 03/2026)
 
+nano /etc/postgresql/17/main/postgresql.conf
 
+<pre>
+uncomment #listen_addresses = 'localhost'
+<pre>
+
+    
 Installing ironclaw:
 
 curl --proto '=https' --tlsv1.2 -LsSf \
@@ -115,7 +121,7 @@ Execute this command:
     
 ironclaw onboard
 
-<pre>```Make these selections:
+<pre>Make these selections:
 1 for PostgreSQL
 Database URL: postgres://CaptainAwesome:1337@localhost:5432/ironclaw
 Run database migrations? Y
@@ -128,7 +134,7 @@ Configure a tunnel? N
 Which channels do you want to enable? Check HTTP webhook. Check others as you wish.
 Which tools do you want to install? Make sure Gmail is checked. Check others as you wish.
 Enable a sandbox? N
-Enable heartbeat? N```</pre>
+Enable heartbeat? N</pre>
     
 
 Now Configure the Gateway and the Webhooks:
