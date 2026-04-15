@@ -111,13 +111,13 @@ source $HOME/.cargo/env
 
 Creating the Database:
 
-sudo -i -u postgres psql -c "CREATE ROLE CaptainAwesome LOGIN SUPERUSER;"     (You can of course exchange CaptainAwesome for whatever you want)
+sudo -i -u postgres psql -c "CREATE ROLE captainawesome LOGIN SUPERUSER;"     (You can of course exchange captainawesome for whatever you want)
 
 sudo -i -u postgres createdb ironclaw
     
 sudo -i -u postgres psql -d ironclaw -c "CREATE EXTENSION IF NOT EXISTS vector;"
     
-sudo -i -u postgres psql -c "ALTER USER CaptainAwesome WITH PASSWORD '1337';"
+sudo -i -u postgres psql -c "ALTER USER captainawesome WITH PASSWORD '1337';"
 
 
 
@@ -130,7 +130,7 @@ ironclaw onboard
 
 <pre>Make these selections:
 1 for PostgreSQL
-Database URL: postgres://CaptainAwesome:1337@localhost:5432/ironclaw?sslmode=disable
+Database URL: postgres://captainawesome:1337@localhost:5432/ironclaw?sslmode=disable
 Run database migrations? Y
 3 Skip
 4 Ollama
