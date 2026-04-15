@@ -130,7 +130,7 @@ ironclaw onboard
 
 <pre>Make these selections:
 1 for PostgreSQL
-Database URL: postgres://CaptainAwesome:1337@localhost:5432/ironclaw
+Database URL: postgres://CaptainAwesome:1337@localhost:5432/ironclaw?sslmode=disable
 Run database migrations? Y
 3 Skip
 4 Ollama
