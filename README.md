@@ -92,6 +92,13 @@ nano /etc/postgresql/17/main/postgresql.conf
 uncomment #listen_addresses = 'localhost'
 </pre>
 
+systemctl daemon-reload
+
+systemctl restart postgres.service
+
+systemctl restart postgres@17-main.service    (coud vary...find out with tab)
+
+
     
 Installing ironclaw:
 
