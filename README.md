@@ -146,11 +146,13 @@ Enable heartbeat? N</pre>
 
 Now Configure the Gateway and the Webhooks:
 
-export GATEWAY_HOST="0.0.0.0"
-    
-export IRONCLAW_HOST="0.0.0.0:3000"
-    
-export HTTP_WEBHOOK_SECRET="1337"
+find / -type f -name ".env" 2>/dev/null
+
+nano /root/.ironclaw/.env    (or wherever you find the .env file)
+
+GATEWAY_HOST=0.0.0.0
+GATEWAY_PORT=3000    
+HTTP_WEBHOOK_SECRET="12345"
 
     
 And run ironclaw:
