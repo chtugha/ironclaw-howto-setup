@@ -45,7 +45,7 @@ Installing nginx:
 
 add this:  
 nano /etc/nginx/sites-available/ollama
-<pre>```
+<pre>
 server {
     listen 11434;
     server_name ollama.local;
@@ -63,7 +63,7 @@ server {
     }
 }
     
-```</pre>
+</pre>
 
 ln -s /etc/nginx/sites-available/ollama /etc/nginx/sites-enabled/
     
