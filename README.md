@@ -162,6 +162,7 @@ nano /root/.ironclaw/.env    (or wherever you find the .env file)
 GATEWAY_HOST=X.X.X.X (set 0.0.0.0 for any interface, or set a distinct interface IP like 192.168.1.11)
 GATEWAY_PORT=3000    
 HTTP_WEBHOOK_SECRET="12345"
+EMBEDDING_ENABLED=true
 EMBEDDING_DIMENSION=384
 </pre>
     
