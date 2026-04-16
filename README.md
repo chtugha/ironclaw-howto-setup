@@ -127,11 +127,6 @@ sudo -i -u postgres psql -d ironclaw -c "CREATE EXTENSION IF NOT EXISTS vector;"
     
 sudo -i -u postgres psql -c "ALTER USER captainawesome WITH PASSWORD '1337';"
 
-sudo -i -u postgres psql -d ironclaw -c "DROP TABLE IF EXISTS embeddings CASCADE;"
-
-sudo -i -u postgres psql -d ironclaw -c "CREATE TABLE embeddings (id UUID PRIMARY KEY, content TEXT, embedding vector(384));"   (This is a setup for local embedding models with vector dimension=384. Change that value according to the embedding model you want to use.)
-
-
     
 Configure ironclaw with the onboard wizard:
 
@@ -166,6 +161,7 @@ nano /root/.ironclaw/.env    (or wherever you find the .env file)
 GATEWAY_HOST=X.X.X.X (set 0.0.0.0 for any interface, or set a distinct interface IP like 192.168.1.11)
 GATEWAY_PORT=3000    
 HTTP_WEBHOOK_SECRET="12345"
+EMBEDDING_DIMENSION=384
 
     
 And run ironclaw:
