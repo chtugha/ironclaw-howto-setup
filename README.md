@@ -16,24 +16,31 @@ ollama run qwen3:14b
 Your service file (usually at: /etc/systemd/system/ollama.service) should look like this if you want the model to be loaded on reboot:
 
 <pre>[Unit]
-Description=Ollama Service
-After=network-online.target
+#Description=Ollama Service
+#After=network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/ollama serve
-User=ollama
-Group=ollama
-Restart=always
-RestartSec=3
-Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#ExecStart=/usr/local/bin/ollama serve
+#User=ollama
+#Group=ollama
+#Restart=always
+#RestartSec=3
+#Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 Environment="OLLAMA_HOST=0.0.0.0"
-Environment="OLLAMA_CONTEXT_LENGTH=16384"
 Environment="OLLAMA_KEEP_ALIVE=-1"
-Environment="OLLAMA_DEBUG=1"
-ExecStartPost=/bin/bash -c "sleep 10 && /usr/local/bin/ollama run qwen3:14b"
+Environment="OLLAMA_DEBUG=0"
+Environment="OLLAMA_CONTEXT_LENGTH=8192"
+Environment="OLLAMA_FLASH_ATTENTION=1"
+Environment="OLLAMA_KV_CACHE_TYPE=q4_0"
+Environment="OLLAMA_NUM_THREAD=4"
+Environment="OLLAMA_MAX_LOADED_MODELS=2"
+Environment="OLLAMA_NO_CLOUD=1"
+Environment="OLLAMA_NUM_PARALLEL=1"
+ExecStartPost=/bin/sh -c 'until curl -s http://localhost:11434 > /dev/null; do sleep 1; done'
+ExecStartPost=/usr/bin/curl -s http://localhost:11434/api/generate -d '{"model":"voytas26/openclaw-qwen3vl-8b-opt:latest","prompt":"hi","stream":false}'
 
 [Install]
-WantedBy=default.target</pre>
+#WantedBy=default.target</pre>
 
 
 
@@ -41,7 +48,8 @@ If you are running Ollama and ironclaw on the same machine you don't need the ng
 Because we don't want to fiddle with Certificates and such for now we will route the connection trough nginx and trick ironclaw into accepting an insecure connection to Ollama like that. Don't do that at home kids!
 
 
-Installing nginx:
+Installing nginx: DO NOT FORGET TO EXCHANGE X.X.X.X FOR YOUR DESIRED IP
+
 
 add this:  
 nano /etc/nginx/sites-available/ollama
@@ -119,7 +127,9 @@ sudo -i -u postgres psql -d ironclaw -c "CREATE EXTENSION IF NOT EXISTS vector;"
     
 sudo -i -u postgres psql -c "ALTER USER captainawesome WITH PASSWORD '1337';"
 
+sudo -i -u postgres psql -d ironclaw -c "DROP TABLE IF EXISTS embeddings;"
 
+sudo -i -u postgres psql -d ironclaw -c "CREATE TABLE embeddings (id UUID PRIMARY KEY, content TEXT, embedding vector(384));"   (This is a setup for local embedding models with vector dimension=384. Change that value according to the embedding model you want to use.
 
     
 Configure ironclaw with the onboard wizard:
@@ -146,17 +156,27 @@ Enable heartbeat? N</pre>
 
 Now Configure the Gateway and the Webhooks:
 
+cd /
+
 find / -type f -name ".env" 2>/dev/null
 
 nano /root/.ironclaw/.env    (or wherever you find the .env file)
 
-GATEWAY_HOST=0.0.0.0
+GATEWAY_HOST=X.X.X.X (set 0.0.0.0 for any interface, or set a distinct interface IP like 192.168.1.11)
 GATEWAY_PORT=3000    
 HTTP_WEBHOOK_SECRET="12345"
 
     
 And run ironclaw:
 
-ironclaw
+apt-get install screen
 
-connect to the web-ui with the link on our screen (Exchange 0.0.0.0 for the actual IP)
+screen (hit enter on the blabla screen, it says that you just started a virtual terminal)
+
+ironclaw run
+
+connect to the web-ui with your browser by copying the link on the screen (Exchange 0.0.0.0 for the actual IP)
+
+connect to the web-ui with the link on your screen
+
+Press CTRL+A followed by CTRL+D     (You can reaatach to the virtual terminal by typing: screen -r)
