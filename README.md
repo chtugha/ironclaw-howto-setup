@@ -129,7 +129,8 @@ sudo -i -u postgres psql -c "ALTER USER captainawesome WITH PASSWORD '1337';"
 
 sudo -i -u postgres psql -d ironclaw -c "DROP TABLE IF EXISTS embeddings;"
 
-sudo -i -u postgres psql -d ironclaw -c "CREATE TABLE embeddings (id UUID PRIMARY KEY, content TEXT, embedding vector(384));"   (This is a setup for local embedding models with vector dimension=384. Change that value according to the embedding model you want to use.
+sudo -i -u postgres psql -d ironclaw -c "CREATE TABLE embeddings (id UUID PRIMARY KEY, content TEXT, embedding vector(384));"   (This is a setup for local embedding models with vector dimension=384. Change that value according to the embedding model you want to use.)
+
 
     
 Configure ironclaw with the onboard wizard:
