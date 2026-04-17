@@ -164,7 +164,7 @@ GATEWAY_PORT=3000
 HTTP_WEBHOOK_SECRET="12345"
 EMBEDDING_ENABLED=true
 EMBEDDING_PROVIDER="ollama"
-EMBEDDING_MODEL="tukia/text-embedding-multilingual-e5-small:latest"
+EMBEDDING_MODEL="qllama/bge-small-en-v1.5:latest"
 EMBEDDING_DIMENSION=384
 </pre>
     
