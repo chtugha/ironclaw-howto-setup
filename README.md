@@ -1,6 +1,11 @@
 # ironclaw-howto-setup
 This is a guide how to setup ironclaw on a minimal debian system and to connect it to a local ollama instance. 
 
+You will need at least (04/2026):
+Python 3+
+docker-cli
+
+
 
 If not already running: This is how you set up Ollama on a debian console:
 
@@ -44,7 +49,41 @@ ExecStartPost=/usr/bin/curl -s http://localhost:11434/api/generate -d '{"model":
 WantedBy=default.target
 </pre>
 
+Now we need a neat model for our homework.
 
+curl -LsSf https://hf.co/cli/install.sh | bash
+
+<pre>
+cd /tmp
+mkdir qwen
+cd qwen
+hf download ykarout/Qwen3.5-9b-Opus-Openclaw-Distilled-GGUF Qwen3.5-9b-Opus-Openclaw-Distilled-vision-merged-Q6_K.gguf --local-dir .
+nano Modelfile
+</pre>
+
+now insert this into Modelfile
+
+<pre>
+FROM ./Qwen3.5-9b-Opus-Openclaw-Distilled-vision-merged-Q6_K.gguf
+TEMPLATE {{ .Prompt }}
+RENDERER qwen3.5
+PARSER qwen3.5
+PARAMETER temperature 0.6
+PARAMETER top_p 0.95
+PARAMETER min_p 0.0
+PARAMETER top_k 20
+PARAMETER repeat_penalty 1.0
+PARAMETER presence_penalty 0.0
+</pre>
+
+save and exit 
+<pre>Ctrl+o Ctrl+x</pre>
+
+and create the model
+
+<pre>
+ollama create qwen3.5-9b-opus-openclaw:Q6_K -f Modelfile
+</pre>
 
 If you are running Ollama and ironclaw on the same machine you don't need the nginx step. If you don't run Ollama on the same Machine ironclaw will refuse to connect to Ollama without TLS-Encryption.
 Because we don't want to fiddle with Certificates and such for now we will route the connection trough nginx and trick ironclaw into accepting an insecure connection to Ollama like that. Don't do that at home kids!
