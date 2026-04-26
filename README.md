@@ -115,6 +115,7 @@ server {
         proxy_set_header Connection "";
         proxy_buffering off;
         proxy_read_timeout 600s;
+        proxy_set_header X-Accel-Buffering no;
     }
     location /api/chat {
         proxy_pass http://X.X.X.X:11434;
@@ -124,6 +125,27 @@ server {
         proxy_set_header Connection "";
         proxy_buffering off;
         proxy_read_timeout 600s;
+        proxy_set_header X-Accel-Buffering no;
+    }
+    location /api/ps {
+        proxy_pass http://X.X.X.X:11434;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+        proxy_read_timeout 600s;
+        proxy_set_header X-Accel-Buffering no;
+    }
+    location /api/show {
+        proxy_pass http://X.X.X.X:11434;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+        proxy_read_timeout 600s;
+        proxy_set_header X-Accel-Buffering no;
     }
     location /v1/ {
         proxy_pass http://X.X.X.X:11434/v1/;
@@ -133,6 +155,7 @@ server {
         proxy_set_header Connection "";
         proxy_buffering off;
         proxy_read_timeout 600s;
+        proxy_set_header X-Accel-Buffering no;
     }
     
     # =====================
@@ -146,6 +169,7 @@ server {
         proxy_set_header Connection "";
         proxy_buffering off;
         proxy_read_timeout 600s;
+        proxy_set_header X-Accel-Buffering no;
     }
 
     # =====================
@@ -158,6 +182,7 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header Connection "";
         proxy_buffering off;
+        proxy_set_header X-Accel-Buffering no;
     }
     location /api/embed {
         proxy_pass http://X.X.X.Y:11435;
@@ -166,6 +191,7 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header Connection "";
         proxy_buffering off;
+        proxy_set_header X-Accel-Buffering no;
     }
 }
 </pre>
