@@ -2,13 +2,16 @@
 This is a guide how to setup ironclaw on a minimal debian system and to connect it to a local ollama instance. 
 
 You will need at least (04/2026):
+
 Python 3+
+
 docker-cli
 
 
 
 If not already running: This is how you set up Ollama on a debian console:
 
+apt-get install pciutils
 
 curl -fsSL https://ollama.com/install.sh | sh
 
