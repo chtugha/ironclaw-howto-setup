@@ -183,20 +183,23 @@ Execute this command:
     
 ironclaw onboard
 
-<pre>Make these selections:
+<pre>
+Make these selections:
+
 1 for PostgreSQL
 Database URL: postgres://captainawesome:1337@localhost:5432/ironclaw?sslmode=disable
 Run database migrations? Y
 3 Skip
-4 Ollama
-Ollama base URL: http://X.X.X.X:11434
-Select a model: choose "qwen3:14b"
+7 Openai compatible
+LLM base URL: http://127.0.0.1:11435
+Select a model: choose "qwen3.5-9b-opus-openclaw:Q6_K"
 Enable semantic search? Y
 Configure a tunnel? N
 Which channels do you want to enable? Check HTTP webhook. Check others as you wish.
 Which tools do you want to install? Make sure Gmail is checked. Check others as you wish.
 Enable a sandbox? N
-Enable heartbeat? N</pre>
+Enable heartbeat? N
+</pre>
     
 
 Now Configure the Gateway and the Webhooks:
