@@ -116,12 +116,30 @@ server {
         proxy_buffering off;
         proxy_read_timeout 600s;
     }
+    location /api/tags {
+        proxy_pass http://X.X.X.X:11434;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+        proxy_read_timeout 600s;
+    }
+    location /api/models {
+        proxy_pass http://X.X.X.X:11434;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+        proxy_read_timeout 600s;
+    }
 
     # =====================
     # Embeddings
     # =====================
     location /api/embeddings {
-        proxy_pass http://X.X.X.Y:11434;
+        proxy_pass http://X.X.X.Y:11435;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
