@@ -48,7 +48,9 @@ If you are running Ollama and ironclaw on the same machine you don't need the ng
 Because we don't want to fiddle with Certificates and such for now we will route the connection trough nginx and trick ironclaw into accepting an insecure connection to Ollama like that. Don't do that at home kids!
 
 
-Installing nginx: DO NOT FORGET TO EXCHANGE X.X.X.X FOR YOUR DESIRED IP
+Installing nginx: DO NOT FORGET TO EXCHANGE X.X.X.X FOR YOUR DESIRED IP.
+
+With this setup you can specify two different ollama servers if you want.
 
 
 add this:  
@@ -58,19 +60,31 @@ server {
     listen 11434;
     server_name ollama.local;
 
-    location / {
+    # =====================
+    # LLM
+    # =====================
+    location /api/generate {
         proxy_pass http://X.X.X.X:11434;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header Connection "";
         proxy_buffering off;
-
-        # LLM generation can take minutes
         proxy_read_timeout 600s;
     }
+
+    # =====================
+    # Embeddings
+    # =====================
+    location /api/embeddings {
+        proxy_pass http://X.X.X.Y:11434;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+    }
 }
-    
 </pre>
 
 ln -s /etc/nginx/sites-available/ollama /etc/nginx/sites-enabled/
