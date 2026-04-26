@@ -16,11 +16,6 @@ apt-get install pciutils
 curl -fsSL https://ollama.com/install.sh | sh
 
 
-ollama pull qwen3:14b
-
-ollama run qwen3:14b
-
-
 Your service file (usually at: /etc/systemd/system/ollama.service) should look like this if you want the model to be loaded on reboot:
 
 <pre>
@@ -38,7 +33,7 @@ Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 Environment="OLLAMA_HOST=0.0.0.0"
 Environment="OLLAMA_KEEP_ALIVE=-1"
 Environment="OLLAMA_DEBUG=0"
-Environment="OLLAMA_CONTEXT_LENGTH=16384"
+Environment="OLLAMA_CONTEXT_LENGTH=12288"
 Environment="OLLAMA_FLASH_ATTENTION=1"
 Environment="OLLAMA_KV_CACHE_TYPE=q4_0"
 Environment="OLLAMA_NUM_THREAD=4"
@@ -54,7 +49,6 @@ WantedBy=default.target
 
 Now we need a neat model for our homework.
 
-ollama remove qwen3:14b
 
 curl -LsSf https://hf.co/cli/install.sh | bash
 
@@ -94,9 +88,14 @@ If you are running Ollama and ironclaw on the same machine you don't need the ng
 Because we don't want to fiddle with Certificates and such for now we will route the connection trough nginx and trick ironclaw into accepting an insecure connection to Ollama like that. Don't do that at home kids!
 
 
+
+_________________________________________
+
+THIS IS A SETUP FOR TWO SEPARATE OLLAMA SERVERS, ONE REMOTE FOR LLM, THE OTHER LOCALLY FOR EMBEDDINGS
+
 Installing nginx: DO NOT FORGET TO EXCHANGE X.X.X.X FOR YOUR DESIRED IP.
 
-With this setup you can specify two different ollama servers if you want.
+_________________________________________
 
 
 add this:  
