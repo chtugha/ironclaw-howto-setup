@@ -15,32 +15,34 @@ ollama run qwen3:14b
 
 Your service file (usually at: /etc/systemd/system/ollama.service) should look like this if you want the model to be loaded on reboot:
 
-<pre>[Unit]
-#Description=Ollama Service
-#After=network-online.target
+<pre>
+[Unit]
+Description=Ollama Service
+After=network-online.target
 
 [Service]
-#ExecStart=/usr/local/bin/ollama serve
-#User=ollama
-#Group=ollama
-#Restart=always
-#RestartSec=3
-#Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ExecStart=/usr/local/bin/ollama serve
+User=ollama
+Group=ollama
+Restart=always
+RestartSec=3
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 Environment="OLLAMA_HOST=0.0.0.0"
 Environment="OLLAMA_KEEP_ALIVE=-1"
 Environment="OLLAMA_DEBUG=0"
-Environment="OLLAMA_CONTEXT_LENGTH=8192"
+Environment="OLLAMA_CONTEXT_LENGTH=4096"
 Environment="OLLAMA_FLASH_ATTENTION=1"
 Environment="OLLAMA_KV_CACHE_TYPE=q4_0"
 Environment="OLLAMA_NUM_THREAD=4"
-Environment="OLLAMA_MAX_LOADED_MODELS=2"
+Environment="OLLAMA_MAX_LOADED_MODELS=1"
 Environment="OLLAMA_NO_CLOUD=1"
 Environment="OLLAMA_NUM_PARALLEL=1"
 ExecStartPost=/bin/sh -c 'until curl -s http://localhost:11434 > /dev/null; do sleep 1; done'
-ExecStartPost=/usr/bin/curl -s http://localhost:11434/api/generate -d '{"model":"voytas26/openclaw-qwen3vl-8b-opt:latest","prompt":"hi","stream":false}'
+ExecStartPost=/usr/bin/curl -s http://localhost:11434/api/generate -d '{"model":"qwen3.5-9b-opus-openclaw:Q6_K","prompt":"hi","stream":false}'
 
 [Install]
-#WantedBy=default.target</pre>
+WantedBy=default.target
+</pre>
 
 
 
