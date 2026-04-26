@@ -54,6 +54,8 @@ WantedBy=default.target
 
 Now we need a neat model for our homework.
 
+ollama remove qwen3:14b
+
 curl -LsSf https://hf.co/cli/install.sh | bash
 
 <pre>
@@ -101,13 +103,13 @@ add this:
 nano /etc/nginx/sites-available/ollama
 <pre>
 server {
-    listen 11434;
-    server_name ollama.local;
+    listen 11435;
+    server_name ollama2.local;
 
     # =====================
     # LLM
     # =====================
-    location /api/generate {
+    location / {
         proxy_pass http://X.X.X.X:11434;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
@@ -115,82 +117,6 @@ server {
         proxy_set_header Connection "";
         proxy_buffering off;
         proxy_read_timeout 600s;
-        proxy_set_header X-Accel-Buffering no;
-    }
-    location /api/chat {
-        proxy_pass http://X.X.X.X:11434;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header Connection "";
-        proxy_buffering off;
-        proxy_read_timeout 600s;
-        proxy_set_header X-Accel-Buffering no;
-    }
-    location /api/ps {
-        proxy_pass http://X.X.X.X:11434;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header Connection "";
-        proxy_buffering off;
-        proxy_read_timeout 600s;
-        proxy_set_header X-Accel-Buffering no;
-    }
-    location /api/show {
-        proxy_pass http://X.X.X.X:11434;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header Connection "";
-        proxy_buffering off;
-        proxy_read_timeout 600s;
-        proxy_set_header X-Accel-Buffering no;
-    }
-    location /v1/ {
-        proxy_pass http://X.X.X.X:11434/v1/;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header Connection "";
-        proxy_buffering off;
-        proxy_read_timeout 600s;
-        proxy_set_header X-Accel-Buffering no;
-    }
-    
-    # =====================
-    # List available Models
-    # =====================
-    location /api/tags {
-        proxy_pass http://X.X.X.X:11434;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header Connection "";
-        proxy_buffering off;
-        proxy_read_timeout 600s;
-        proxy_set_header X-Accel-Buffering no;
-    }
-
-    # =====================
-    # Embeddings
-    # =====================
-    location /api/embeddings {
-        proxy_pass http://X.X.X.Y:11435;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header Connection "";
-        proxy_buffering off;
-        proxy_set_header X-Accel-Buffering no;
-    }
-    location /api/embed {
-        proxy_pass http://X.X.X.Y:11435;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header Connection "";
-        proxy_buffering off;
         proxy_set_header X-Accel-Buffering no;
     }
 }
@@ -288,11 +214,13 @@ GATEWAY_PORT=3000
 HTTP_HOST=127.0.0.1
 HTTP_PORT=8080
 HTTP_WEBHOOK_SECRET="12345"
-LLM_BACKEND="ollama"
-OLLAMA_MODEL="qwen3.5-9b-opus-openclaw:Q6_K"
+LLM_BACKEND="openai_compatible"
+LLM_BASE_URL="http://127.0.0.1:11435"
+LLM_MODEL="qwen3.5-9b-opus-openclaw:Q6_K"
 EMBEDDING_ENABLED=true
 EMBEDDING_PROVIDER="ollama"
 EMBEDDING_MODEL="nomic-embed-text"
+EMBEDDING_BASE_URL="http://127.0.0.1:11434"
 EMBEDDING_DIMENSION=768
 </pre>
 
