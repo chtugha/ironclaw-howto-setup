@@ -234,6 +234,16 @@ ironclaw config set embeddings.provider ollama
 ironclaw config set embeddings.model nomic-embed-text
 </pre>
 
+Now install the sandbox:
+you need a docker account and access token for that!
+
+<pre>
+cd /tmp
+git clone https://github.com/nearai/ironclaw
+cd /ironclaw/docker
+docker login
+docker build -f sandbox.Dockerfile -t ironclaw-worker:latest .
+</pre>
     
 And run ironclaw:
 
