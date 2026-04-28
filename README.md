@@ -175,6 +175,18 @@ sudo -i -u postgres psql -d ironclaw -c "CREATE EXTENSION IF NOT EXISTS vector;"
     
 sudo -i -u postgres psql -c "ALTER USER captainawesome WITH PASSWORD '1337';"
 
+
+Now install the sandbox:
+you need a docker account and access token for that!
+
+<pre>
+cd /tmp
+git clone https://github.com/nearai/ironclaw
+cd /ironclaw/docker
+docker login
+docker build -f sandbox.Dockerfile -t ironclaw-worker:latest .
+</pre>
+
     
 Configure ironclaw with the onboard wizard:
 
@@ -234,16 +246,6 @@ ironclaw config set embeddings.provider ollama
 ironclaw config set embeddings.model nomic-embed-text
 </pre>
 
-Now install the sandbox:
-you need a docker account and access token for that!
-
-<pre>
-cd /tmp
-git clone https://github.com/nearai/ironclaw
-cd /ironclaw/docker
-docker login
-docker build -f sandbox.Dockerfile -t ironclaw-worker:latest .
-</pre>
     
 And run ironclaw:
 
