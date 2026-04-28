@@ -158,8 +158,7 @@ systemctl restart postgres@17-main.service    (coud vary...find out with tab)
     
 Installing ironclaw:
 
-curl --proto '=https' --tlsv1.2 -LsSf \
-  https://github.com/nearai/ironclaw/releases/latest/download/ironclaw-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/nearai/ironclaw/releases/latest/download/ironclaw-installer.sh | sh
 
 source $HOME/.cargo/env
 
@@ -182,9 +181,9 @@ you need a docker account and access token for that!
 <pre>
 cd /tmp
 git clone https://github.com/nearai/ironclaw
-cd /ironclaw/docker
+cd /ironclaw
 docker login
-docker build -f sandbox.Dockerfile -t ironclaw-worker:latest .
+docker build -f Dockerfile.worker -t ironclaw-worker:latest .
 </pre>
 
     
