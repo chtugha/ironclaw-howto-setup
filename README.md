@@ -221,20 +221,21 @@ find / -type f -name ".env" 2>/dev/null
 nano /root/.ironclaw/.env    (or wherever you find the .env file)
 
 <pre>
-GATEWAY_ENABLED=true
-GATEWAY_HOST=X.X.X.X (set 0.0.0.0 for any interface, or set a distinct interface IP like 192.168.1.11)
-GATEWAY_PORT=3000
-HTTP_HOST=127.0.0.1
-HTTP_PORT=8080
+GATEWAY_ENABLED="true"
+GATEWAY_HOST="X.X.X.X" (set 0.0.0.0 for any interface, or set a distinct interface IP like 192.168.1.11)
+GATEWAY_PORT="3000"
+HTTP_HOST="127.0.0.1"
+HTTP_PORT="8080"
 HTTP_WEBHOOK_SECRET="12345"
 LLM_BACKEND="openai_compatible"
 LLM_BASE_URL="http://127.0.0.1:11435"
 LLM_MODEL="qwen3.5-9b-opus-openclaw:Q6_K"
-EMBEDDING_ENABLED=true
+EMBEDDING_ENABLED="true"
 EMBEDDING_PROVIDER="ollama"
 EMBEDDING_MODEL="nomic-embed-text"
 EMBEDDING_BASE_URL="http://127.0.0.1:11434"
-EMBEDDING_DIMENSION=768
+EMBEDDING_DIMENSION="768"
+HTTP_ALLOW_LOCALHOST="true"
 </pre>
 
 Now set some more variables:
